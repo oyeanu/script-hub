@@ -10,7 +10,7 @@
 Advanced Script Converter for QX, Loon, Surge, Stash, Egern, LanceX and Shadowrocket
 </p>
 <p align="center" color="#6a737d">
-# Rewrite & Rule Set Conversion
+Rewrite & Rule Set Conversion
 
 ## Community
 

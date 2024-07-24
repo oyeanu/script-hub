@@ -9,7 +9,7 @@ const reloaded = () => {
     $.done({
       response: {
         status: 200,
-        body: `<meta charset="UTF-8" /><h1>✅ Surge 重载完成<h1><a href="surge://">点此打开 Surge</a>`,
+        body: `<meta charset="UTF-8" /><h1>✅ Surge After reloadFinish<h1><a href="surge://">点此打开 Surge</a>`,
         headers: {
           'Content-Type': 'text/html;charset=UTF-8',
           'Access-Control-Allow-Origin': '*',
@@ -37,27 +37,27 @@ const reloaded = () => {
 if (isReloadRequest()) {
   if ($.isSurge()) {
     $.msg(
-      'Surge 重载',
-      '即将进行(由于重载机制, 可能没有后续通知)',
-      '点此通知打开 Surge (⚠️ 更新已有模块时 可能仍需要杀掉 Surge 的后台重新打开才能生效)',
+      'Surge After reload',
+      ' ,
+      'Tap to open Surge (⚠️ When updating an existing module May still need to be killed Surge The backend needs to be reopened to take effect.)',
       'surge://'
     )
     httpAPI('/v1/profiles/reload', 'POST', {}).then(() => {
       $.msg(
-        'Surge 重载',
-        '✅ 完成',
-        '点此通知打开 Surge (⚠️ 更新已有模块时 可能仍需要杀掉 Surge 的后台重新打开才能生效)',
+        'Surge After reload',
+        '✅ Finish',
+        'Tap to open Surge (⚠️ When updating an existing module May still need to be killed Surge The backend needs to be reopened to take effect.)',
         'surge://'
       )
-      // 重载后这里不会执行...所以下面又写了一段
+      // Won't execute after reload... wrote another section below
       reloaded()
     })
   } else {
-    $.msg('重载', '🈚️ 不支持的环境', '暂时仅支持 Surge')
+    $.msg('After reload', '🈚️ Unsupported environment', 'Temporarily supports only Surge')
     reloaded()
   }
 }
-// 重载后会执行到这里
+// After reload Will run here later
 if (isReloadRequest()) {
   reloaded()
 }
@@ -842,23 +842,23 @@ textarea::-webkit-resizer {
 const htmls = `
 </script>
   <div id="app"><a href="https://github.com/Script-Hub-Org/Script-Hub"><h1 style="margin-bottom: 0;">Script Hub</h1></a>
-      <p>重写 & 规则集转换 <small>&#9432; <a href="https://github.com/Script-Hub-Org/Script-Hub/wiki" target="_blank">查看文档</a></small></p>
+      <p>Rewrite & Rule set conversion <small>&#9432; <a href="https://github.com/Script-Hub-Org/Script-Hub/wiki" target="_blank">View docs</a></small></p>
 
       <div style=" margin-top: 30px;">
-      <!--<code>输入类型:</code> -->
+      <!--<code>Input type:</code> -->
         <span style="position: relative; top: -9px;" v-for="item in inputTypes">
             <input type="radio" :id="'input-type-' + item.value" :value="item.value" v-model.lazy="inputType" :disabled="item.disabled"/>
             <label :for="'input-type-' + item.value" class="radio-label">{{item.label}}</label>
         </span>
-        <textarea v-if=" inputType === 'local-text' " style=" position: relative; top: 4px; " id="localtext" v-model.lazy="localtext" placeholder="请填写本地文件内容"></textarea>
-        <textarea v-else style=" position: relative; top: 4px; " id="src" v-model.lazy="src" placeholder="请填写来源 URL 链接(多个 URL 用 😂 连接)"></textarea>
+        <textarea v-if=" inputType === 'local-text' " style=" position: relative; top: 4px; " id="localtext" v-model.lazy="localtext" placeholder="Please enter local file content"></textarea>
+        <textarea v-else style=" position: relative; top: 4px; " id="src" v-model.lazy="src" placeholder="Please fill in Specify source URL Link(Multiple URL Use 😂 Connect)"></textarea>
       </div>
       <!--font-size: 16px;  style=" position: relative; top: -3px; "-->
-      <small style=" position: relative; top: 7px; ">&nbsp;&#9432; <a href="https://github.com/Script-Hub-Org/Script-Hub/wiki/%E6%88%91%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E9%80%89%E6%8B%A9%E6%9D%A5%E6%BA%90%E7%B1%BB%E5%9E%8B%E5%92%8C%E7%9B%AE%E6%A0%87%E7%B1%BB%E5%9E%8B" target="_blank">如何选择类型</a></small>
+      <small style=" position: relative; top: 7px; ">&nbsp;&#9432; <a href="https://github.com/Script-Hub-Org/Script-Hub/wiki/%E6%88%91%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E9%80%89%E6%8B%A9%E6%9D%A5%E6%BA%90%E7%B1%BB%E5%9E%8B%E5%92%8C%E7%9B%AE%E6%A0%87%E7%B1%BB%E5%9E%8B" target="_blank">How to choose type</a></small>
       <div class="flex-container">
       <div style="white-space: nowrap;">
       
-        <code>&nbsp;来源类型: </code>
+        <code>&nbsp;Source type: </code>
         <div v-for="item in types">
             <input type="radio" :id="'type-' + item.value" :value="item.value" v-model.lazy="type" :disabled="item.disabled"/>
             <label :for="'type-' + item.value" class="radio-label">{{item.label}}</label>
@@ -867,7 +867,7 @@ const htmls = `
       </div>
 
       <div>
-        <code>&nbsp;目标类型: </code>
+        <code>&nbsp;Target type: </code>
         <template v-for="item in targets">
           <div v-if="type === 'rule-set' ? (item.value.endsWith('rule-set') || item.value.includes('domain-set')) : ( (item.value.endsWith('-rule-set')||item.value.includes('domain-set')) ? false : ( type.endsWith('-script') ? item.value.endsWith('-script') : !item.value.endsWith('-script') ) ) ">
             <input type="radio" :id="'target-' + item.value" :value="item.value" v-model.lazy="target" :disabled="item.disabled || (type.endsWith('-script') && !item.value.endsWith('-script')) || (type === 'rule-set' && (!item.value.endsWith('rule-set') && !item.value.includes('domain-set'))) || (type === 'plain-text' && item.value !== 'plain-text') " />
@@ -880,87 +880,87 @@ const htmls = `
 
     <details v-if="!target || type === 'qx-script' || target.endsWith('-script')">
       <summary>
-      QX 专属脚本说明：
+      QX Custom script details：
       <br/>
-      你一般<code>不需要用它</code>, 因为这是 <code>脚本转脚本</code>
+      You generally<code>Don't need to use it</code>, Because this is <code>script-to-script</code>
       <br/>
-      通常情况下, 你需要的是 <code>QX 重写 转换到 模块/覆写/插件</code>
+      Typically, you need <code>QX Rewrite to Module/Override/Plugin</code>
       <br/>
-      专属脚本转换的使用场景:
+      Scenarios for using custom script conversion:
       <br/>
-      你想在你的模块/覆写/插件中, 单独引用一条转换的 QX 专属脚本
+      You want to reference a specific converted QX custom script individually in your module/override/plugin
       </summary>
       <span>
-      <!--无-->
+      <!--None-->
       </span>
       
     </details>
 
     <!-- position: fixed; -->
     <div style="padding: 1rem;bottom: 0rem;margin-right: 0rem;background-color: var(--kbg);/* border: 1px solid var(--border); */border-radius: var(--standard-border-radius);">
-        <span v-if="result" style="color: red">请勿打开链接之后复制浏览器地址栏的链接 浏览器地址栏中的链接可能未编码 可能会导致导入参数异常</span><br/>
-        <a v-if="result" :href="result" target="_blank" style="margin: 0 0.5rem 0 0">打开链接</a>
-        <a v-if="previewResult" :href="previewResult" target="_blank" style="margin: 0 0.5rem 0 0">预览结果</a>
-        <a v-if="result && target === 'shadowrocket-module' " :href=" 'https://api.boxjs.app/shadowrocket/install?module=' + encodeURIComponent(result) " target="_blank" style="margin: 0 0.5rem 0 0">导入(Shadowrocket)</a>
-        <a v-if="result && target === 'loon-plugin' " :href=" 'https://www.nsloon.com/openloon/import?plugin=' + encodeURIComponent(result) " target="_blank" style="margin: 0 0.5rem 0 0">导入(Loon)</a>
-        <a v-if="result && target === 'stash-stoverride' " :href=" 'stash://install-override?url=' + encodeURIComponent(result) " target="_blank" style="margin: 0 0.5rem 0 0">导入(Stash)</a>
+        <span v-if="result" style="color: red">Don't copy the address bar link; it may cause import issues</span><br/>
+        <a v-if="result" :href="result" target="_blank" style="margin: 0 0.5rem 0 0">Open link</a>
+        <a v-if="previewResult" :href="previewResult" target="_blank" style="margin: 0 0.5rem 0 0">See Results</a>
+        <a v-if="result && target === 'shadowrocket-module' " :href=" 'https://api.boxjs.app/shadowrocket/install?module=' + encodeURIComponent(result) " target="_blank" style="margin: 0 0.5rem 0 0">Import(Shadowrocket)</a>
+        <a v-if="result && target === 'loon-plugin' " :href=" 'https://www.nsloon.com/openloon/import?plugin=' + encodeURIComponent(result) " target="_blank" style="margin: 0 0.5rem 0 0">Import(Loon)</a>
+        <a v-if="result && target === 'stash-stoverride' " :href=" 'stash://install-override?url=' + encodeURIComponent(result) " target="_blank" style="margin: 0 0.5rem 0 0">Import(Stash)</a>
         <template v-if="result && target === 'surge-module' ">
-          <a :href=" 'surge:///install-module?url=' + encodeURIComponent(result) + '&name=' + encodeURIComponent(filename) " target="_blank" style="margin: 0 0.5rem 0 0">导入 Surge(远程模块)</a>
-          <a :href=" 'scriptable:///run/SurgeModuleTool?url=' + encodeURIComponent(result) + '&name=' + encodeURIComponent(filename) " target="_blank" style="margin: 0 0.5rem 0 0">导入 Surge(本地模块 需配合 Scriptable)</a>
-          <small>&#9432; <a href="https://github.com/Script-Hub-Org/Script-Hub/wiki/%E7%9B%B8%E5%85%B3%E7%94%9F%E6%80%81:-Surge-%E6%A8%A1%E5%9D%97%E5%B7%A5%E5%85%B7" target="_blank">如何配合 Scriptable 导入</a></small>
+          <a :href=" 'surge:///install-module?url=' + encodeURIComponent(result) + '&name=' + encodeURIComponent(filename) " target="_blank" style="margin: 0 0.5rem 0 0">Import Surge(Remote module)</a>
+          <a :href=" 'scriptable:///run/SurgeModuleTool?url=' + encodeURIComponent(result) + '&name=' + encodeURIComponent(filename) " target="_blank" style="margin: 0 0.5rem 0 0">Import Surge(Local module requires Scriptable)</a>
+          <small>&#9432; <a href="https://github.com/Script-Hub-Org/Script-Hub/wiki/%E7%9B%B8%E5%85%B3%E7%94%9F%E6%80%81:-Surge-%E6%A8%A1%E5%9D%97%E5%B7%A5%E5%85%B7" target="_blank">How to integrate Scriptable Import</a></small>
         </template>
         <template v-if="result">
           <br/>
-          <small>&#9432; 将此链接中的 <code>file</code> 或 <code>convert</code> 改为 <code>edit</code> 即可在浏览器中再次对当前内容进行编辑</small>
+          <small>&#9432; From this link <code>file</code> Or <code>convert</code> 改为 <code>edit</code> To edit the current content again in the browser</small>
         </template>
-        <textarea v-if="frontendConvert" id="frontendConvertResult" :value="frontendConvertResult" placeholder="结果" readonly></textarea>
-        <textarea v-else id="result" :value="result" placeholder="结果(请输入来源链接并选择类型)" readonly></textarea>
+        <textarea v-if="frontendConvert" id="frontendConvertResult" :value="frontendConvertResult" placeholder="Result" readonly></textarea>
+        <textarea v-else id="result" :value="result" placeholder="Result(Enter the source link and select the type)" readonly></textarea>
         <div>
           <input type="checkbox" id="frontendConvert" v-model.lazy="frontendConvert" :disabled="frontendConvertDisabled"/>
-          <label class="button-over" for="frontendConvert">开启纯前端转换</label>
+          <label class="button-over" for="frontendConvert">Enable pure front-end conversion</label>
           <br/>
-          <small>使用限制: 1. 使用网页部署前端 2. 使用 <code>本地文本内容</code> 3. 转换类型为 <code>重写/模块/覆写/插件 </code> 4. 不会进行内部的 <code>脚本转换</code> 5. 不会进行网络请求 例: 无法使用 <code>可莉图标订阅</code> 但是可以使用完整图标文件链接</small>
+          <small>Usage restrictions: 1. Deploy front-end on the web 2. Use <code>Local text content</code> 3. Conversion type is <code>Rewrite/Module/Override/Plugin </code> 4. Will not perform internal <code>Script conversion</code> 5. Will not make network requests, e.g: Cannot be used <code>Klee's icons</code> But you can use the full icon file link</small>
         </div>
         <button v-if="copyInfo">{{copyInfo}}</button>
-        <button v-else @click="copy" :disabled="!result">复制</button>
-            <!-- <button v-else @click="copy">全选{{isHttps ? "&复制" : ""}}</button> -->
-            <!-- <small v-if="!isHttps"> https://script.hub 可复制</small> -->
+        <button v-else @click="copy" :disabled="!result">Copy</button>
+            <!-- <button v-else @click="Copy">select all{{isHttps ? "&Copy" : ""}}</button> -->
+            <!-- <small v-if="!isHttps"> https://script.hub Copyable</small> -->
             &nbsp;&nbsp;
             <button v-if="resetInfo">{{resetInfo}}</button>
-            <button v-else @click="reset">重置</button>
+            <button v-else @click="reset">Reset</button>
       </div>
       <br/>
 
       <template v-if="!target || !type || (!target.endsWith('rule-set') && !target.includes('domain-set') && !target.endsWith('-script') && target !== 'plain-text' )">
-        <small style=" position: relative; top: -4px;">&nbsp;&#9432; <a href="https://github.com/Script-Hub-Org/Script-Hub/wiki/%E6%88%91%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E9%80%89%E6%8B%A9%E6%9D%A5%E6%BA%90%E7%B1%BB%E5%9E%8B%E5%92%8C%E7%9B%AE%E6%A0%87%E7%B1%BB%E5%9E%8B#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%A6%81%E5%BC%80%E5%90%AF%E8%84%9A%E6%9C%AC%E8%BD%AC%E6%8D%A2" target="_blank">什么时候应该启用脚本转换</a></small>
+        <small style=" position: relative; top: -4px;">&nbsp;&#9432; <a href="https://github.com/Script-Hub-Org/Script-Hub/wiki/%E6%88%91%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E9%80%89%E6%8B%A9%E6%9D%A5%E6%BA%90%E7%B1%BB%E5%9E%8B%E5%92%8C%E7%9B%AE%E6%A0%87%E7%B1%BB%E5%9E%8B#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%A6%81%E5%BC%80%E5%90%AF%E8%84%9A%E6%9C%AC%E8%BD%AC%E6%8D%A2" target="_blank">When to enable conversion</a></small>
         <details>
-          <summary>启用脚本转换</summary>
+          <summary>Enable script conversion</summary>
           <small> &#9432; <a href="https://github.com/Script-Hub-Org/Script-Hub/wiki/%E6%88%91%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E9%80%89%E6%8B%A9%E6%9D%A5%E6%BA%90%E7%B1%BB%E5%9E%8B%E5%92%8C%E7%9B%AE%E6%A0%87%E7%B1%BB%E5%9E%8B#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%A6%81%E5%BC%80%E5%90%AF%E8%84%9A%E6%9C%AC%E8%BD%AC%E6%8D%A2" target="_blank">脚本转换 1 和 2 怎么选</a></small>
           <details>
-            <summary>启用脚本转换 1</summary>
-            <span>根据关键词为脚本启用脚本转换(多关键词以 <code>+</code> 分隔，主要用途 将使用了QX独有api的脚本转换为通用脚本，谨慎开启，大部分脚本本身就通用，无差别启用，只会徒增功耗)</span>
+            <summary>Enable conversion 1</summary>
+            <span>Enable conversion for scripts based on keywords(Multiple keywords use <code>+</code>to separate，Main purpose: Convert scripts using QX-specific APIs to general scripts，Enable with caution，Most scripts are already general，Enabling without distinction，Will only increase power consumption)</span>
             <textarea id="jsc" v-model.lazy="jsc" placeholder=""></textarea>
             <div>
               <input type="checkbox" id="jsc_all" v-model.lazy="jsc_all" />
-              <label for="jsc_all">全部转换</label>
+              <label for="jsc_all">Convert all</label>
             </div>
             <div>
               <input type="checkbox" id="compatibilityOnly" v-model.lazy="compatibilityOnly" />
-              <label class="button-over" for="compatibilityOnly">仅进行兼容性转换<small style=" position: relative; top: -4px;">&nbsp;&#9432; <a href="https://github.com/Script-Hub-Org/Script-Hub/wiki/%E6%88%91%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E9%80%89%E6%8B%A9%E6%9D%A5%E6%BA%90%E7%B1%BB%E5%9E%8B%E5%92%8C%E7%9B%AE%E6%A0%87%E7%B1%BB%E5%9E%8B#%E4%BB%80%E4%B9%88%E6%98%AF-%E4%BB%85%E8%BF%9B%E8%A1%8C%E5%85%BC%E5%AE%B9%E6%80%A7%E8%BD%AC%E6%8D%A2" target="_blank">什么是 <code>仅进行兼容性转换</code></a></small></label>
+              <label class="button-over" for="compatibilityOnly">Compatibility conversion only<small style=" position: relative; top: -4px;">&nbsp;&#9432; <a href="https://github.com/Script-Hub-Org/Script-Hub/wiki/%E6%88%91%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E9%80%89%E6%8B%A9%E6%9D%A5%E6%BA%90%E7%B1%BB%E5%9E%8B%E5%92%8C%E7%9B%AE%E6%A0%87%E7%B1%BB%E5%9E%8B#%E4%BB%80%E4%B9%88%E6%98%AF-%E4%BB%85%E8%BF%9B%E8%A1%8C%E5%85%BC%E5%AE%B9%E6%80%A7%E8%BD%AC%E6%8D%A2" target="_blank">What is <code>Compatibility conversion only</code></a></small></label>
             </div>
           </details>
 
           <details>
-            <summary>启用脚本转换 2</summary>
-            <span>根据关键词为脚本启用脚本转换(与 <code>启用脚本转换 1</code> 的区别: 总是会在 <code>$done</code><code>(body)</code> 里包一个response)</span>
+            <summary>Enable script conversion 2</summary>
+            <span>Enable script conversion based on keywords(With <code>Enable script conversion 1</code> Difference: Always wraps in <code>$done</code><code>(body)</code>Contains response)</span>
             <textarea id="jsc2" v-model.lazy="jsc2" placeholder=""></textarea>
             <div>
               <input type="checkbox" id="jsc2_all" v-model.lazy="jsc2_all" />
-              <label for="jsc2_all">全部转换</label>
+              <label for="jsc2_all">Convert all</label>
             </div>
             <div>
               <input type="checkbox" id="compatibilityOnly" v-model.lazy="compatibilityOnly" />
-              <label class="button-over" for="compatibilityOnly">仅进行兼容性转换<small style=" position: relative; top: -4px;">&nbsp;&#9432; <a href="https://github.com/Script-Hub-Org/Script-Hub/wiki/%E6%88%91%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E9%80%89%E6%8B%A9%E6%9D%A5%E6%BA%90%E7%B1%BB%E5%9E%8B%E5%92%8C%E7%9B%AE%E6%A0%87%E7%B1%BB%E5%9E%8B#%E4%BB%80%E4%B9%88%E6%98%AF-%E4%BB%85%E8%BF%9B%E8%A1%8C%E5%85%BC%E5%AE%B9%E6%80%A7%E8%BD%AC%E6%8D%A2" target="_blank">什么是 <code>仅进行兼容性转换</code></a></small></label>
+              <label class="button-over" for="compatibilityOnly">Compatibility conversion only<small style=" position: relative; top: -4px;">&nbsp;&#9432; <a href="https://github.com/Script-Hub-Org/Script-Hub/wiki/%E6%88%91%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E9%80%89%E6%8B%A9%E6%9D%A5%E6%BA%90%E7%B1%BB%E5%9E%8B%E5%92%8C%E7%9B%AE%E6%A0%87%E7%B1%BB%E5%9E%8B#%E4%BB%80%E4%B9%88%E6%98%AF-%E4%BB%85%E8%BF%9B%E8%A1%8C%E5%85%BC%E5%AE%B9%E6%80%A7%E8%BD%AC%E6%8D%A2" target="_blank">What is <code>Compatibility conversion only</code></a></small></label>
             </div>
           </details>
         </details>
@@ -1177,7 +1177,7 @@ const htmls = `
 
       <div v-if="!target || target.endsWith('-script') ">
         <input type="checkbox" id="compatibilityOnly" v-model.lazy="compatibilityOnly" />
-        <label class="button-over" for="compatibilityOnly">仅进行兼容性转换<small style=" position: relative; top: -4px;">&nbsp;&#9432; <a href="https://github.com/Script-Hub-Org/Script-Hub/wiki/%E6%88%91%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E9%80%89%E6%8B%A9%E6%9D%A5%E6%BA%90%E7%B1%BB%E5%9E%8B%E5%92%8C%E7%9B%AE%E6%A0%87%E7%B1%BB%E5%9E%8B#%E4%BB%80%E4%B9%88%E6%98%AF-%E4%BB%85%E8%BF%9B%E8%A1%8C%E5%85%BC%E5%AE%B9%E6%80%A7%E8%BD%AC%E6%8D%A2" target="_blank">什么是 <code>仅进行兼容性转换</code></a></small></label>
+        <label class="button-over" for="compatibilityOnly">Compatibility conversion only<small style=" position: relative; top: -4px;">&nbsp;&#9432; <a href="https://github.com/Script-Hub-Org/Script-Hub/wiki/%E6%88%91%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E9%80%89%E6%8B%A9%E6%9D%A5%E6%BA%90%E7%B1%BB%E5%9E%8B%E5%92%8C%E7%9B%AE%E6%A0%87%E7%B1%BB%E5%9E%8B#%E4%BB%80%E4%B9%88%E6%98%AF-%E4%BB%85%E8%BF%9B%E8%A1%8C%E5%85%BC%E5%AE%B9%E6%80%A7%E8%BD%AC%E6%8D%A2" target="_blank">What is <code>Compatibility conversion only</code></a></small></label>
       </div>
 
 
@@ -1482,7 +1482,7 @@ const htmls = `
       },
       result: function () {
         if (this.src && this.src.startsWith('https://quantumult.app/x/open-app/add-resource')) {
-          return '⚠️⚠️⚠️ 你填入的是 QX 导入链接. 请安装 https://t.me/h5683577/211 然后在浏览器中预览资源 分别转换规则集和重写'
+          return '⚠️⚠️⚠️ 你填入的是 QX Import链接. 请安装 https://t.me/h5683577/211 然后在浏览器中预览资源 分别转换规则集和重写'
         }
 				const fields = {}
         if (this.jsc_all) {
